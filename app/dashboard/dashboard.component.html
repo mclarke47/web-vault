@@ -1,0 +1,31 @@
+<h1>{{title}}</h1>
+
+<div>console</div>
+<div class="theme" [ngClass]="{error: isError, info: isInfo}">{{response}}</div>
+
+<hr/>
+
+<seal
+        [accessKey]="accessKey"
+        (responseEmitter)="updateResponse($event)"
+        (sealStatusEmitter)="updateSealStatus($event)"
+></seal>
+
+<hr/>
+<key-management
+        (responseEmitter)="updateResponse($event)"
+        (accessKeyEmitter)="updateAccessKey($event)"
+></key-management>
+
+
+<hr/>
+<create-secret
+        [accessKey]="accessKey"
+        (responseEmitter)="updateResponse($event)"
+></create-secret>
+
+<hr/>
+<read-secret
+        [accessKey]="accessKey"
+        (responseEmitter)="updateResponse($event)"
+></read-secret>

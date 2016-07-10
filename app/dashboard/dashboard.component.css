@@ -1,0 +1,11 @@
+
+
+.theme.error {
+    background-color: darkred;
+    color: whitesmoke;
+}
+
+.theme.info {
+    background-color: cornflowerblue;
+    color: whitesmoke;
+}

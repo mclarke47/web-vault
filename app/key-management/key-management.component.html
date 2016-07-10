@@ -1,0 +1,6 @@
+<h3>key management</h3>
+<button (click)="newKey()" [disabled]="isSealed">new key</button>
+
+<div>current key</div>
+<input [(ngModel)]="accessKey" (keyup)="onAccessKeyChange($event)" placeholder="uuid" />
+<input [(ngModel)]="rootToken" placeholder="root token" />
