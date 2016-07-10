@@ -66,7 +66,7 @@ export class VaultService{
         var body = {value: secretValue};
         let headers = new Headers();
         headers.append("X-Vault-Token", apiKey);
-        return this.http.post(this.vaultUrl+ "secret/"+secretPath, body, {
+        return this.http.post(this.vaultUrl+ "secret"+secretPath, body, {
                 headers: headers
             })
             .toPromise()
@@ -76,7 +76,7 @@ export class VaultService{
     getSecret(accessKey:string, secretPath:string) {
         let headers = new Headers();
         headers.append("X-Vault-Token", accessKey);
-        return this.http.get(this.vaultUrl+ "secret/"+secretPath, {
+        return this.http.get(this.vaultUrl+ "secret"+secretPath, {
             headers: headers
         })
             .toPromise()
@@ -84,6 +84,21 @@ export class VaultService{
                 return response.json();
             })
             .catch(this.handleError);
+    }
+
+    getSecretsAtPath(accessKey:string, currentPath:string) {
+        let headers = new Headers();
+        headers.append("X-Vault-Token", accessKey);
+        return this.http.get(this.vaultUrl+ "secret"+currentPath+"?list=true", {
+            headers: headers
+        })
+            .toPromise()
+            .then(response => {
+                return response.json();
+            })
+            .catch(error => {
+                error
+            });
     }
 
     newToken(rootToken:any) {

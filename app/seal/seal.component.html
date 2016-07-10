@@ -1,4 +1,6 @@
-<h3>seal status</h3>
-<div>{{isSealed}}</div>
-<button (click)="unsealVault()" *ngIf="isSealed">unseal Vault</button>
-<button (click)="sealVault()" *ngIf="!isSealed">seal Vault</button>
+<div class="col-md-1">
+    <h3>seal status</h3>
+    <div>{{isSealed}}</div>
+    <button (click)="unsealVault()">unseal Vault</button>
+    <button (click)="sealVault()" >seal Vault</button>
+</div>

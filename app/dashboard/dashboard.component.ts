@@ -2,8 +2,6 @@ import {Component, OnInit, Injectable} from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 import {VaultService} from "../vault-service";
-import {CreateSecretComponent} from "../create-secret/create-secret.component";
-import {ReadSecretComponent} from "../read-secret/read-secret.component";
 import {KeyManagementComponent} from "../key-management/key-management.component";
 import {SealComponent} from "../seal/seal.component";
 
@@ -12,7 +10,7 @@ import {SealComponent} from "../seal/seal.component";
     templateUrl: 'app/dashboard/dashboard.component.html',
     styleUrls: ['app/dashboard/dashboard.component.css'],
     providers: [VaultService],
-    directives: [CreateSecretComponent, ReadSecretComponent, KeyManagementComponent, SealComponent]
+    directives: [ KeyManagementComponent, SealComponent]
 
 })
 
@@ -24,6 +22,7 @@ export class DashboardComponent implements OnInit {
     isSealed = true;
     isError = false;
     isInfo = true;
+    secretPath = "";
 
     constructor(private service:VaultService) {
     }

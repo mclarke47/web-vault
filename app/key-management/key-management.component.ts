@@ -14,7 +14,7 @@ export class KeyManagementComponent {
 
     @Output() responseEmitter = new EventEmitter<string>();
     @Output() accessKeyEmitter = new EventEmitter<string>();
-    rootToken;
+    rootToken = ""; // put your root key here to make testing easier
     accessKey;
 
     constructor(private service:VaultService) {
