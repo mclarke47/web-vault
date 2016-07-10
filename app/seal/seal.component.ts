@@ -1,5 +1,6 @@
 import {VaultService} from "../vault-service";
 import {Component, Injectable, EventEmitter, Output, Input, OnInit} from "@angular/core";
+import {accessToken} from "../app/app.component";
 
 @Component({
     selector: 'seal',
@@ -15,9 +16,8 @@ export class SealComponent implements OnInit {
     @Input() accessKey;
     @Output() responseEmitter = new EventEmitter<string>();
     @Output() sealStatusEmitter = new EventEmitter<boolean>();
+    errorMessage;
 
-    isSealed;
-    
     constructor(private service:VaultService) {
     }
 
@@ -67,6 +67,9 @@ export class SealComponent implements OnInit {
             .then(resp => {
                 this.changeSealedStatus(resp.sealed);
                 return resp.sealed;
+            }).
+            catch(err => {
+                this.errorMessage = err.json().errors[0];
             });
     }
     

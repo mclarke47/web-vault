@@ -3,13 +3,20 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router-
 
 import {DashboardComponent} from '../dashboard/dashboard.component';
 import {SecretListComponent} from "../secret-list/secret-list.component";
+import {SignInComponent} from "../signin/signin.component";
 
 @RouteConfig([
+    {
+        path: '/signin',
+        name: 'SignIn',
+        component: SignInComponent,
+        useAsDefault: true
+    },
     {
         path: '/dashboard',
         name: 'Dashboard',
         component: DashboardComponent,
-        useAsDefault: true
+        useAsDefault: false
     },
     {
         path: '/secrets',

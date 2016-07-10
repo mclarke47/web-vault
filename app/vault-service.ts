@@ -1,18 +1,18 @@
 import {Component, OnInit, Injectable} from '@angular/core';
-import { Router } from '@angular/router-deprecated';
+import {Router} from '@angular/router-deprecated';
 import {Http, Headers} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class VaultService{
+export class VaultService {
 
-    private vaultUrl = 'http://127.0.0.1:80/v1/';  // URL to web api
+    private vaultUrl = 'http://local.me.com/v1/';  // URL to web api
 
-    constructor(private http: Http) {
+    constructor(private http:Http) {
     }
 
-    initStatus(){
+    initStatus() {
         return this.http.get(this.vaultUrl + "sys/init")
             .toPromise()
             .then(response => {
@@ -21,7 +21,7 @@ export class VaultService{
             .catch(this.handleError);
     }
 
-    init(){
+    init() {
         var body = {secret_shares: 1, secret_threshold: 1};
         return this.http.put(this.vaultUrl + "sys/init", body)
             .toPromise()
@@ -31,7 +31,7 @@ export class VaultService{
             .catch(this.handleError);
     }
 
-    private handleError(error: any) {
+    private handleError(error:any) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     }
@@ -39,7 +39,7 @@ export class VaultService{
     seal(apiKey) {
         let headers = new Headers();
         headers.append("X-Vault-Token", apiKey);
-        return this.http.put(this.vaultUrl+ "sys/seal", {}, {
+        return this.http.put(this.vaultUrl + "sys/seal", {}, {
             headers: headers
         })
             .toPromise()
@@ -48,27 +48,29 @@ export class VaultService{
 
     unseal(apiKey) {
         var body = {key: apiKey};
-        return this.http.put(this.vaultUrl+ "sys/unseal", body)
+        return this.http.put(this.vaultUrl + "sys/unseal", body)
             .toPromise()
             .catch(this.handleError);
     }
 
     sealStatus() {
-        return this.http.get(this.vaultUrl+ "sys/seal-status")
+        return this.http.get(this.vaultUrl + "sys/seal-status")
             .toPromise()
             .then(response => {
                 return response.json();
             })
-            .catch(this.handleError);
+            .catch(err => {
+                return Promise.reject(err);
+            });
     }
 
     save(apiKey:string, secretPath:string, secretValue:string) {
         var body = {value: secretValue};
         let headers = new Headers();
         headers.append("X-Vault-Token", apiKey);
-        return this.http.post(this.vaultUrl+ "secret"+secretPath, body, {
-                headers: headers
-            })
+        return this.http.post(this.vaultUrl + "secret" + secretPath, body, {
+            headers: headers
+        })
             .toPromise()
             .catch(this.handleError);
     }
@@ -76,7 +78,7 @@ export class VaultService{
     getSecret(accessKey:string, secretPath:string) {
         let headers = new Headers();
         headers.append("X-Vault-Token", accessKey);
-        return this.http.get(this.vaultUrl+ "secret"+secretPath, {
+        return this.http.get(this.vaultUrl + "secret" + secretPath, {
             headers: headers
         })
             .toPromise()
@@ -89,7 +91,7 @@ export class VaultService{
     getSecretsAtPath(accessKey:string, currentPath:string) {
         let headers = new Headers();
         headers.append("X-Vault-Token", accessKey);
-        return this.http.get(this.vaultUrl+ "secret"+currentPath+"?list=true", {
+        return this.http.get(this.vaultUrl + "secret" + currentPath + "?list=true", {
             headers: headers
         })
             .toPromise()
@@ -104,7 +106,7 @@ export class VaultService{
     newToken(rootToken:any) {
         let headers = new Headers();
         headers.append("X-Vault-Token", rootToken);
-        return this.http.post(this.vaultUrl+ "auth/token/create", {}, {
+        return this.http.post(this.vaultUrl + "auth/token/create", {}, {
             headers: headers
         })
             .toPromise()
